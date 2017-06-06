@@ -35,11 +35,10 @@ def build_part1_RNN(step_size, window_size):
 def clean_text(text):
     # find all unique characters in the text
     uniques = list(set(text))
-
     # remove as many non-english characters and character sequences as you can 
-    locale.setlocale(locale.LC_CTYPE,'en_US.UTF-8')
+    #we keep only ascii characters and punctuations ,.:!?;
     for a in uniques:
-        if a not in string.printable:
+        if a not in string.ascii_lowercase+',.:!?;':
             text = text.replace(a, ' ')
     return text
 
