@@ -13974,7 +13974,7 @@ $$a\longleftarrow\left[\begin{array}{c}
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="prompt input_prompt">In&nbsp;[87]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### necessary functions from the keras library</span>
@@ -13987,8 +13987,11 @@ $$a\longleftarrow\left[\begin{array}{c}
 
 <span class="c1"># TODO build the required RNN model: a single LSTM hidden layer with softmax activation, categorical_crossentropy loss </span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">Sequential</span><span class="p">()</span>
+<span class="c1">#add a LSTM layer with 200 hidden units and the input shape is (windows_size, len(chars))</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">LSTM</span><span class="p">(</span><span class="mi">200</span><span class="p">,</span> <span class="n">input_shape</span><span class="o">=</span><span class="p">(</span><span class="n">window_size</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">))))</span>
+<span class="c1">#add a Dense layer with len(chars) dimension</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Dense</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">chars</span><span class="p">)))</span>
+<span class="c1">#add a softmax activation layer as this is multiclass classfication.</span>
 <span class="n">model</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">Activation</span><span class="p">(</span><span class="s1">&#39;softmax&#39;</span><span class="p">))</span>
 
 <span class="c1"># initialize optimizer</span>
@@ -13996,9 +13999,38 @@ $$a\longleftarrow\left[\begin{array}{c}
 
 <span class="c1"># compile model --&gt; make sure initialized optimizer and callbacks - as defined above - are used</span>
 <span class="n">model</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">loss</span><span class="o">=</span><span class="s1">&#39;categorical_crossentropy&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
 </pre></div>
 
 </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+<div class="prompt"></div>
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_5 (LSTM)                (None, 200)               187200    
+_________________________________________________________________
+dense_5 (Dense)              (None, 33)                6633      
+_________________________________________________________________
+activation_2 (Activation)    (None, 33)                0         
+=================================================================
+Total params: 193,833.0
+Trainable params: 193,833.0
+Non-trainable params: 0.0
+_________________________________________________________________
+</pre>
+</div>
+</div>
+
 </div>
 </div>
 
